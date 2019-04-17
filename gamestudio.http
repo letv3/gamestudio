@@ -1,0 +1,43 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+
+
+#POST http://localhost:8080/rest/score
+#Content-Type: application/json
+#
+#{
+#  "game": "sudoku",
+#  "player": "sanek",
+#  "points": 100,
+#  "playedOn": "2019-03-25T12:40:33"
+#}
+#
+####
+
+#POST http://localhost:8080/rest/comment
+#Content-Type: application/json
+#
+#{
+#  "game": "sudoku",
+#  "player": "sanek",
+#  "comment": "hahah, good job",
+#  "commentedOn": "2019-01-28T12:40:33"
+#}
+
+###
+#POST http://localhost:8080/rest/rating
+#Content-Type: application/json
+#
+#{
+#  "player": "sanek",
+#  "game": "sudoku",
+#  "rating": 1,
+#  "ratedOn": "2019-01-28T12:40:33"
+#}
+
+###
