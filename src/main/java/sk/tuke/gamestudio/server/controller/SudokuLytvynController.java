@@ -40,7 +40,7 @@ public class SudokuLytvynController {
         List<Score> bestScores = scoreService.getBestScores("sudoku-sudoku.lytvyn");
         model.addAttribute("scores", bestScores);
 
-        return "sudoku-sudoku.lytvyn"; //same name as the template
+        return "sudoku-lytvyn"; //same name as the template
 
     }
 }
