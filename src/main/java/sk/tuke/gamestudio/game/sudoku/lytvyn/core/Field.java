@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.game.color_sudoku.lytvyn.core;
+package sk.tuke.gamestudio.game.sudoku.lytvyn.core;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +30,7 @@ public class Field {
 
     private void generateField() {
         solvedField=generateSolvedField();
-        preparedField= PrepareField(copy(solvedField),80
+        preparedField= PrepareField(copy(solvedField),79
         );
         startMillis = System.currentTimeMillis();
     }

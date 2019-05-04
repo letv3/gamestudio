@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.game.color_sudoku.lytvyn.webui;
+package sk.tuke.gamestudio.game.sudoku.lytvyn.webui;
 
 import sk.tuke.gamestudio.service.ScoreService;
 

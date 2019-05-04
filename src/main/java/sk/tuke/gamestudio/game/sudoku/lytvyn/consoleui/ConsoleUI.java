@@ -1,8 +1,10 @@
-package sk.tuke.gamestudio.game.color_sudoku.lytvyn.consoleui;
+package sk.tuke.gamestudio.game.sudoku.lytvyn.consoleui;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import sk.tuke.gamestudio.game.color_sudoku.lytvyn.core.*;
+import sk.tuke.gamestudio.game.sudoku.lytvyn.core.Field;
+import sk.tuke.gamestudio.game.sudoku.lytvyn.core.GameState;
+import sk.tuke.gamestudio.game.sudoku.lytvyn.core.Tile;
 import sk.tuke.gamestudio.service.*;
 import sk.tuke.gamestudio.entity.*;
 

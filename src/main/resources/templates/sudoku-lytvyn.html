@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>color sudoku</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--link rel="stylesheet" href="/css/stylesheet.css" /-->
+    <link rel="stylesheet" th:href="@{css/sudoku-lytvyn.css}">
+</head>
+<body>
+<h1>COLOR SUDOKU</h1>
+<a href="/sudoku-lytvyn/new">New game</a><br/>
+<div th:text="${@sudokuLytvynController.gameState}"/>
+<div class="field" th:utext="${@sudokuLytvynController.htmlField}"></div>
+<div class="buttons" th:utext="${@sudokuLytvynController.buttonField}"></div>
+
+<script th:src="@{js/sudoku-lytvyn.js}"></script>
+</body>
+</html>

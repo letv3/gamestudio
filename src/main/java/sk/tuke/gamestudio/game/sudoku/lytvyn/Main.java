@@ -1,6 +1,6 @@
-package sk.tuke.gamestudio.game.color_sudoku.lytvyn;
+package sk.tuke.gamestudio.game.sudoku.lytvyn;
 
-import sk.tuke.gamestudio.game.color_sudoku.lytvyn.consoleui.ConsoleUI;
+import sk.tuke.gamestudio.game.sudoku.lytvyn.consoleui.ConsoleUI;
 
 
 public class Main {

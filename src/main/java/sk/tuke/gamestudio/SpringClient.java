@@ -5,14 +5,20 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import sk.tuke.gamestudio.game.color_sudoku.lytvyn.consoleui.ConsoleUI;
-import sk.tuke.gamestudio.game.color_sudoku.lytvyn.core.Field;
+import org.springframework.context.annotation.FilterType;
+import sk.tuke.gamestudio.game.sudoku.lytvyn.consoleui.ConsoleUI;
+import sk.tuke.gamestudio.game.sudoku.lytvyn.core.Field;
 import sk.tuke.gamestudio.service.*;
 
 
 @Configuration
 @SpringBootApplication
+@ComponentScan(basePackages = { "sk.tuke.gamestudio" },
+        excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX,
+                pattern = "sk.tuke.gamestudio.server.*"))
+
 public class SpringClient {
 
     public static void main(String[] args) throws Exception {

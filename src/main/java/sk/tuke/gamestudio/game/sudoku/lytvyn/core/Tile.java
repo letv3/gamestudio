@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.game.color_sudoku.lytvyn.core;
+package sk.tuke.gamestudio.game.sudoku.lytvyn.core;
 
 public class Tile {
 
