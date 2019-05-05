@@ -3,16 +3,102 @@
 <head>
     <title>color sudoku</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!--link rel="stylesheet" href="/css/stylesheet.css" /-->
-    <link rel="stylesheet" th:href="@{css/sudoku-lytvyn.css}">
+
+    <link rel="stylesheet" href="/css/sudoku-lytvyn.css" />
+    <script src="/js/sudoku-lytvyn.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!--link rel="stylesheet" th:href="@{css/sudoku-lytvyn.css}">
+    <script th:src="@{js/sudoku-lytvyn.js}"></script   + " " + score.playedOn +    -->
+
+    <script type="text/javascript">
+        //<![CDATA[
+        function refreshScore() {
+            $.ajax({url: "/rest/score/sudoku",}).done(function (json) {
+                $("#scoreList").empty();
+                for (var i in json) {
+                    var score = json[i];
+                    $("#scoreList").append($("<li>" + score.player + " " + score.points + "</li>"));
+                }
+            });
+        }
+
+        $(document).ready(refreshScore);
+        //]]>
+    </script>
+
+
 </head>
 <body>
 <h1>COLOR SUDOKU</h1>
-<a href="/sudoku-lytvyn/new">New game</a><br/>
-<div th:text="${@sudokuLytvynController.gameState}"/>
-<div class="field" th:utext="${@sudokuLytvynController.htmlField}"></div>
-<div class="buttons" th:utext="${@sudokuLytvynController.buttonField}"></div>
+    <div class="managing">
+        <a href="/sudoku-lytvyn/new">New game</a>
 
-<script th:src="@{js/sudoku-lytvyn.js}"></script>
+
+        <div class="comment" th:if="${loggedUser != null}">
+            <form method="get" action="/sudoku-lytvyn/comment">
+                Comment: <input name="comment" type="text"/>
+                <input type="submit" value="Leave comment">
+            </form>
+        </div>
+
+        <div class="logging" th:if="${loggedUser != null}">
+            You are logged as <span th:text="${loggedUser}"/>.
+            <a href="/sudoku-lytvyn/logout">Logout</a>
+        </div>
+
+        <div th:if="${loggedUser == null}">
+            <form method="get" action="/sudoku-lytvyn/login">
+                Login: <input name="login" type="text"/>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+
+        <div class="rating" th:if="${loggedUser != null}">
+            <form method="get" action="/sudoku-lytvyn/rating">
+                <div class="rate">
+                    <input type="radio" id="star5" name="rate" value="5" />
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" id="star4" name="rate" value="4" />
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" id="star3" name="rate" value="3" />
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" id="star2" name="rate" value="2" />
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio" id="star1" name="rate" value="1" />
+                    <label for="star1" title="text">1 star</label>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+
+    <div class="win" th:if="${@sudokuLytvynController.gameWon==true}">
+        Congrats <div class="name" th:text="${loggedUser}"/> , You WON!
+    </div>
+    <div class="field" th:utext="${@sudokuLytvynController.htmlField}"></div><br/>
+    <div class="buttons" th:utext="${@sudokuLytvynController.buttonField}"></div><br/>
+
+
+    <div class="serviceTables">
+
+        <h2>Scores <!--input type="button" onclick="refreshScore()" value="Refresh"/--></h2>
+            <ol id="scoreList"></ol>
+        <h2>Comments</h2>
+            <ol>
+                <li th:each="comment :${comments}">
+                <span th:text="${comment.player}"/>
+                <span th:text="${comment.Comment}"/>
+                <span th:text="${comment.commentedOn}"/>
+                </li>
+            </ol>
+        <h2>Average Rating</h2>
+            <ol>
+                <span th:text="${rating}"/>
+            </ol>
+    </div>
+
 </body>
 </html>

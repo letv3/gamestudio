@@ -7,11 +7,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
+import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.entity.Rating;
+import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.sudoku.lytvyn.core.*;
 import sk.tuke.gamestudio.service.CommentService;
 import sk.tuke.gamestudio.service.RatingService;
 import sk.tuke.gamestudio.service.ScoreService;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,9 +36,15 @@ public class SudokuLytvynController {
     private static Map<Integer, Field> fields = new HashMap<>();
     private Field field;
     private int displayId;
-    private String loggedUser, GAMENAME="sudoku-lytvyn";
+    private String loggedUser, GAMENAME="sudoku", comment;
 
+    @RequestMapping
+    public String sudoku_init(Model model) {
+        newGame();
+        updateModel(model);
+        return "sudoku-lytvyn"; //same name as the template
 
+    }
 
     @RequestMapping("/{value}/{row}/{column}")
     public String sudoku(@PathVariable int value, @PathVariable int row, @PathVariable int column, Model model) {
@@ -50,20 +60,6 @@ public class SudokuLytvynController {
         return "sudoku-lytvyn"; //same name as the template
 
     }
-
-    @RequestMapping
-    public String sudoku_init(Model model) {
-        newGame();
-        updateModel(model);
-        return "sudoku-lytvyn"; //same name as the template
-
-    }
-//    @RequestMapping("/setValue")
-//    public String SetValue() {
-//        currentValue=
-//        return "sudoku-lytvyn";
-//    }
-
 
     @RequestMapping("/field")
     public String field(String row, String column,String value, Model model) {
@@ -87,26 +83,34 @@ public class SudokuLytvynController {
         return "sudoku-lytvyn";
     }
 
-//    @RequestMapping("/login")
-//    public String login(String login, Model model) {
-//        loggedUser = login;
-//        updateModel(model);
-//        return "sudoku-lytvyn";
-//    }
-//
-//    @RequestMapping("/logout")
-//    public String logout(Model model) {
-//        loggedUser = null;
-//        updateModel(model);
-//        return "sudoku-lytvyn";
-//    }
+    @RequestMapping("/login")
+    public String login(String login, Model model) {
+        loggedUser = login;
+        updateModel(model);
+        return "sudoku-lytvyn";
+    }
+
+    @RequestMapping("/logout")
+    public String logout(Model model) {
+        loggedUser = null;
+        updateModel(model);
+        return "sudoku-lytvyn";
+    }
+
+    @RequestMapping("/comment")
+    public String addComment(String comment, Model model){
+        commentService.addComment(new Comment(loggedUser, comment, GAMENAME, new Date()));
+        updateModel(model);
+        return "sudoku-lytvyn";
+    }
 
 
-
-
-
-
-
+    @RequestMapping("/rating")
+    public String addRating(String rating, Model model){
+        ratingService.setRating(new Rating(loggedUser, GAMENAME, Integer.parseInt(rating), new Date()));
+        updateModel(model);
+        return "sudoku-lytvyn";
+    }
 
 
 
@@ -114,6 +118,15 @@ public class SudokuLytvynController {
 
     public GameState getGameState() {
         return field.getState();
+    }
+
+    public boolean getGameWon(){
+        if(field.getState()==GameState.SOLVED) return true;
+        else return false;
+    }
+    public int getCurrentScore(){
+        scoreService.addScore(new Score(loggedUser, field.getScore(), GAMENAME, new Date()));
+        return field.getScore();
     }
 
     public String getHtmlField() {
@@ -213,11 +226,11 @@ public class SudokuLytvynController {
 
 
     private void updateModel(Model model) {
-        model.addAttribute("displayId", displayId);
+        //model.addAttribute("displayId", displayId);
         model.addAttribute("loggedUser", loggedUser);
-       // model.addAttribute("scores", scoreService.getBestScores(GAMENAME));
-       // model.addAttribute("comments",commentService.getComments(GAMENAME));
-        // model.addAttribute("average rating", ratingService.getAverageRating(GAMENAME));
+        model.addAttribute("scores", scoreService.getBestScores(GAMENAME));
+        model.addAttribute("comments",commentService.getComments(GAMENAME));
+        model.addAttribute("rating", ratingService.getAverageRating(GAMENAME));
     }
 
     private void newGame() {

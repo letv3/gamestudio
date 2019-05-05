@@ -175,7 +175,7 @@ public class Field {
 
 //Check if there is the same number on X, Y axes and in the bos 3x3
     private boolean isNumberSuitable(Tile[][] field , int row, int column, int valueNeedToSet){
-        if(isPossibleY(field, column, valueNeedToSet) && isPossibleX(field, row, valueNeedToSet) && isPossibleBox(field,column, row, valueNeedToSet)){
+        if(isPossibleY(field, column, valueNeedToSet) || isPossibleX(field, row, valueNeedToSet) || isPossibleBox(field,column, row, valueNeedToSet)){
             return true;
         }else{
             return false;
@@ -224,7 +224,7 @@ public class Field {
     }
 
     public int getScore() {
-        return getPlayingTime();
+        return 1000-getPlayingTime();
     }
 
 

@@ -13,7 +13,12 @@
     margin: 0px 0px 10px 0px;
 }
 body {
-    background-image: linear-gradient(to right, white, gray);
+    background-image:
+            radial-gradient(circle at 50% 0,aqua -50%, transparent),
+            linear-gradient(140deg,navy -20%, transparent 60%),
+            linear-gradient(-150deg, magenta -30%, transparent 60% ),
+            radial-gradient(circle at 50% 120%, yellow, transparent),
+            linear-gradient(to right, navy, red);
     font-size: 16px;
     font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Helvetica CE", sans-serif;
     color: #000000;  
@@ -21,6 +26,8 @@ body {
 }
 
 h1 {
+    display: flex;
+    justify-content: center;
     font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
     font-size:  28px;
     font-weight: bold;
@@ -39,13 +46,13 @@ h2 {
 }
 
 a:link, a:visited {
-  color: #045491;
+  color: #74a0cd;
   font-weight : bold;
   text-decoration: none;
 }
 
 a:link:hover, a:visited:hover  {
-  color: #045491;
+  color: #74a0cd;
   font-weight : bold;
   text-decoration : underline;
 }
@@ -121,18 +128,84 @@ a:link:hover, a:visited:hover  {
   padding: 10px;
 }
 
-.field {
+.field{
+    display: flex;
+    justify-content: center;
     border-collapse: separate;
     border-bottom: 2vw;
 }
+.buttons{
+    display: flex;
+    justify-content: center;
+}
+.serviceTables{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+.managing{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.logging{
 
-td {
+}
+.comment{}
+
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+
+
+.win{
+    display: flex;
+    font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
+    font-size: large;
+    justify-content: center;
+}
+.name{
+
+    font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
+    font-weight: bold;
+    font-size: large;
+    color: #045491
+}
+
+td{
     padding: 0;
 }
 
-img {
-    border-collapse: separate ;
-    border-width: 0.5vw;
-    height: 4vw;
-    width: 4vw;
+img{
+    height: 3vw;
+    width: 3vw;
 }
