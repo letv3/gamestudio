@@ -10,7 +10,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <!--link rel="stylesheet" th:href="@{css/sudoku-lytvyn.css}">
-    <script th:src="@{js/sudoku-lytvyn.js}"></script   + " " + score.playedOn +    -->
+    <script th:src="@{js/sudoku-lytvyn.js}"></script-->
+
+<!--    + " " + score.playedOn +-->
 
     <script type="text/javascript">
         //<![CDATA[
@@ -24,6 +26,7 @@
             });
         }
 
+
         $(document).ready(refreshScore);
         //]]>
     </script>
@@ -35,6 +38,7 @@
     <div class="managing">
         <a href="/sudoku-lytvyn/new">New game</a>
 
+        <a href="/sudoku-lytvyn/display/pair/1">Connect to display 1</a>
 
         <div class="comment" th:if="${loggedUser != null}">
             <form method="get" action="/sudoku-lytvyn/comment">
@@ -58,17 +62,18 @@
         <div class="rating" th:if="${loggedUser != null}">
             <form method="get" action="/sudoku-lytvyn/rating">
                 <div class="rate">
-                    <input type="radio" id="star5" name="rate" value="5" />
+                    <input type="radio" id="star5" name="rating" value="5" />
                     <label for="star5" title="text">5 stars</label>
-                    <input type="radio" id="star4" name="rate" value="4" />
+                    <input type="radio" id="star4" name="rating" value="4" />
                     <label for="star4" title="text">4 stars</label>
-                    <input type="radio" id="star3" name="rate" value="3" />
+                    <input type="radio" id="star3" name="rating" value="3" />
                     <label for="star3" title="text">3 stars</label>
-                    <input type="radio" id="star2" name="rate" value="2" />
+                    <input type="radio" id="star2" name="rating" value="2" />
                     <label for="star2" title="text">2 stars</label>
-                    <input type="radio" id="star1" name="rate" value="1" />
+                    <input type="radio" id="star1" name="rating" value="1" />
                     <label for="star1" title="text">1 star</label>
                 </div>
+                <input type="submit" value="Submit Rating" style="background-color: #c59b08">
             </form>
         </div>
 
@@ -83,7 +88,6 @@
 
 
     <div class="serviceTables">
-
         <h2>Scores <!--input type="button" onclick="refreshScore()" value="Refresh"/--></h2>
             <ol id="scoreList"></ol>
         <h2>Comments</h2>

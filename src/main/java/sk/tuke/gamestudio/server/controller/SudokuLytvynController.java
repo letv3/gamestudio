@@ -36,7 +36,7 @@ public class SudokuLytvynController {
     private static Map<Integer, Field> fields = new HashMap<>();
     private Field field;
     private int displayId;
-    private String loggedUser, GAMENAME="sudoku", comment;
+    private String loggedUser, GAMENAME="sudoku";
 
     @RequestMapping
     public String sudoku_init(Model model) {
@@ -58,21 +58,6 @@ public class SudokuLytvynController {
         }
         updateModel(model);
         return "sudoku-lytvyn"; //same name as the template
-
-    }
-
-    @RequestMapping("/field")
-    public String field(String row, String column,String value, Model model) {
-        if (field == null)
-            newGame();
-        try{
-            field.updateTile(Integer.parseInt(value),Integer.parseInt(row),Integer.parseInt(column));
-        }catch(NumberFormatException e){
-            //nothing was sent
-            e.printStackTrace();
-        }
-        updateModel(model);
-        return "field"; //same name as the template
 
     }
 
@@ -112,6 +97,26 @@ public class SudokuLytvynController {
         return "sudoku-lytvyn";
     }
 
+    @RequestMapping("/display/{id}")
+    public String display(@PathVariable int id, Model model) {
+        displayId = id;
+        Field field = fields.get(id);
+        if (field != null)
+            model.addAttribute("htmlField", getHtmlField(field));
+        updateModel(model);
+        return "sudoku_view";
+    }
+
+    @RequestMapping("/display/pair/{id}")
+    public String pair(@PathVariable int id, Model model) {
+        displayId = id;
+        if (field == null)
+            newGame();
+        fields.put(id, field);
+        updateModel(model);
+        return "sudoku";
+    }
+
 
 
 //   ------ Functions imlementation
@@ -130,17 +135,25 @@ public class SudokuLytvynController {
     }
 
     public String getHtmlField() {
+        return getHtmlField(field);
+    }
+
+
+    public String getHtmlField(Field field) {
         StringBuilder sb = new StringBuilder();
-        sb.append("<table>\n");
+        sb.append("<table class='field'>\n");
         for (int row = 0; row < field.getRowCount(); row++) {
             sb.append("<tr>\n");
             for (int column = 0; column < field.getRowCount(); column++) {
                 Tile tile = field.getTile(row, column);
                 sb.append("<td>\n");
-                sb.append("<div " +
-                        String.format("onclick=\"mark('%d/%d')\"", row, column)
-                        + "'>\n");
+                if(field.equals(this.field)) {
+                    sb.append("<div " +
+                            String.format("onclick=\"mark('%d/%d')\"", row, column)
+                            + "'>\n");
+                }
                 sb.append("<img src='/images/sudoku.lytvyn/" + getImageName(tile) + ".png'>");
+                //if(field.equals(this.field)) sb.append("</a>\n");
                 sb.append("</div>\n");
                 sb.append("</td>\n");
             }
@@ -226,7 +239,7 @@ public class SudokuLytvynController {
 
 
     private void updateModel(Model model) {
-        //model.addAttribute("displayId", displayId);
+        model.addAttribute("displayId", displayId);
         model.addAttribute("loggedUser", loggedUser);
         model.addAttribute("scores", scoreService.getBestScores(GAMENAME));
         model.addAttribute("comments",commentService.getComments(GAMENAME));

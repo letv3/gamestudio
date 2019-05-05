@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>sudoku-lytvyn-view</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="refresh" content="1"/>
+    <link rel="stylesheet" href="/css/sudoku-lytvyn.js.css"/>
+
+</head>
+<body>
+    <h1>Sudoku-lytvyn</h1>
+        <h2>Display ID: <span th:text="${displayId}"/></h2>
+
+        <div th:if="${htmlField != null}">
+            <div th:utext="${htmlField}"></div>
+        </div>
+
+    <h2>Scores</h2>
+    <ol>
+        <li th:each="score : ${scores}">
+            <span th:text="${score.player}"/>
+            <span th:text="${score.points}"/>
+        </li>
+    </ol>
+
+</body>
+</html>
